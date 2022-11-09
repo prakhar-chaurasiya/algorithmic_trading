@@ -19,9 +19,17 @@ def loadprices(symbol, years=1):
   for line in data[1:]:
     row = line.split(',')
     try:
-      daily_adjusted_close.append([row[0], float(row[5]), int(row[6])])
+      daily_adjusted_close.append([row[0], float(row[1]), float(row[2]), float(row[3]), float(row[4]), float(row[5]), int(row[6])])
     except:
       pass
-  df_close = pd.DataFrame(daily_adjusted_close, columns=['date', 'close', 'volume'])
+  df_close = pd.DataFrame(daily_adjusted_close, columns=['date', 'open', 'high', 'low', 'close', 'adj_close', 'volume'])
   df_close['date'] = pd.to_datetime(df_close['date'])
   return df_close.set_index('date')
+
+def saveprices(symbol, years=1):
+  df = loadprices(symbol=symbol, years=years)
+  if(symbol[0] == '^'):
+    name = symbol[1:].upper()
+  else:
+    name = symbol
+  df.to_csv(f'{name}.csv')

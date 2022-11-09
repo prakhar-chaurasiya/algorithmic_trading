@@ -1,3 +1,3 @@
-from yahoo_finance import loadprices
+from yahoo_finance import saveprices
 
-loadprices("^NSEI", 10).to_csv('NIFTY50.csv')
+saveprices('^NSEI', 10)
